@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  todo-app-next-dev:
+    build:
+      context: .
+      target: build
+    command: ["yarn", "dev"]
+    ports:
+      - "3000:3000"
+    image: todo-app-next-dev:latest
+    volumes:
+      - ./:/app
+    networks:
+      - app-network
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:

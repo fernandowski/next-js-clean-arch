@@ -12,6 +12,9 @@
 # next.js
 /.next/
 /out/
+/.idea/
+/todo-list.iml
+
 
 # production
 /build
