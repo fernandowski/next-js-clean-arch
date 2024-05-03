@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
         body: json,
     }
     const data = await userSignOnController.execute(httpRequest);
-
     if (data.statusCode === 200) {
         const newResponse = NextResponse.json(data)
         newResponse.cookies.set({

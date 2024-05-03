@@ -14,10 +14,7 @@ export class UserRegistrationController extends BaseController{
         try {
             // @ts-ignore
             const user : RegistrationUser = {email: request.body.email, password: request.body.password}
-            console.log('start')
-            console.log(user)
             await this.usecase.execute(user);
-            console.log('kkkk')
             return ok({status: 'ok'})
         } catch (e: any) {
             console.log(e)

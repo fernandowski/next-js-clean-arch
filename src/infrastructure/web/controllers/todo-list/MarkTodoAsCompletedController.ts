@@ -10,11 +10,11 @@ export class MarkTodoAsCompletedController extends BaseController {
         super()
     }
 
-    async execute(request: HttpRequest<{name: string}, undefined, undefined, undefined>, params : any): Promise<HttpResponse> {
-        try {            // @ts-ignore
+    async execute(_httpRequest: HttpRequest, _params: any = {}): Promise<HttpResponse> {
+        try {
 
-            const authenticatedUser : AuthenticatedUser = {id: request.user.id, email: request.user.email};
-            const todoId = params.todoId;
+            const authenticatedUser : AuthenticatedUser = {id: _httpRequest.user?.id ?? '', email: _httpRequest.user?.email ?? ''};
+            const todoId = _params.todoId;
             const result = await this.useCase.execute(todoId, authenticatedUser);
             return ok({data: result})
         } catch (e: any) {

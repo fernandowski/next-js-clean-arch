@@ -7,6 +7,6 @@ import {ok} from "../helpers/https";
 export class BaseController {
 
     async execute(_httpRequest: HttpRequest, _params: any = {}): Promise<HttpResponse> {
-        return ok({});
+        return ok({data: {}});
     }
 }

@@ -1,7 +1,7 @@
 
 type HttpResponse<T = any> = {
     statusCode: number;
-    body?: T;
+    body: T;
 };
 
 export const ok = <T = any> (body: T): HttpResponse<T> => ({

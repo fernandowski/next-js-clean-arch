@@ -5,7 +5,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {UserVerifyJWTController} from "@/infrastructure/web/controllers/user/UserVerifyJWTController";
 import {validateUserJWT} from "@/main/factories/compose";
 
-export default (controller: BaseController) => async (req: NextRequest, params : any = {}): Promise<NextResponse> => {
+const routeHandler = (controller: BaseController) => async (req: NextRequest, params : any = {}): Promise<NextResponse> => {
     const body = await parseBody(req);
 
     const validateJWTUseCase = new UserVerifyJWTController(validateUserJWT);
@@ -26,7 +26,7 @@ export default (controller: BaseController) => async (req: NextRequest, params :
         cookies: req.cookies
     };
 
-    const httpResponse: void | HttpResponse = await controller.execute(httpRequest, params);
+    const httpResponse : HttpResponse= await controller.execute(httpRequest, params);
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
         return NextResponse.json(httpResponse.body,  {status: httpResponse.statusCode});
     } else {
@@ -56,3 +56,5 @@ function getAuthToken (request: HttpRequest): string {
         return '';
     }
 }
+
+export default routeHandler;

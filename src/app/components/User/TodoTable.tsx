@@ -11,7 +11,7 @@ import {
     TableRow,
     TextField
 } from "@mui/material";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import Dlg from "@/app/components/util/Dlg";
 import {redirect, useRouter} from "next/navigation";
 
@@ -33,17 +33,11 @@ export default function TodoTable() {
     const [openDlg, setOpenDlg] = useState(false);
     const [error, setError] = useState('');
 
-
-    useEffect(() => {
-        refreshData();
-    }, []);
-
-    const redirectError = (error : string) => {
-        console.log(error)
+    const redirectError = useCallback((error : string) => {
         if (error === 'Unauthorized') { router.push('/sign-on'); }
-    }
+    }, [router])
 
-    const refreshData = async () => {
+    const refreshData = useCallback(async () => {
         try {
             const res = await fetch('/api/v1/todos', {
                 method: 'GET',
@@ -60,7 +54,11 @@ export default function TodoTable() {
         } catch (error) {
             console.log(error);
         }
-    }
+    }, [redirectError])
+
+    useEffect(() => {
+        refreshData();
+    }, [refreshData]);
 
     const handleMarkAsCompleted = async (todoId : string) => {
         //

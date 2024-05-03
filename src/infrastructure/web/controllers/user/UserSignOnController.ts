@@ -9,9 +9,9 @@ export class UserSignOnController extends BaseController {
         super();
     }
 
-    async execute(request: HttpRequest<{email: string, password: string }, undefined, undefined>) : Promise<HttpResponse<{token: string}> | HttpResponse<Error>> {
+    async execute(request: HttpRequest<{email: string, password: string }, undefined, undefined>) : Promise<HttpResponse> {
         try {
-            const result = await this.usecase.execute({email: request.body.email, password: request.body.password});
+            const result = await this.usecase.execute({email: request.body!.email, password: request.body!.password});
             return ok({token: result})
         } catch (e: any) {
             return badRequest(e);
